@@ -3,18 +3,25 @@
 //  PKA
 //
 //  Created by 郑遥 on 15/11/9.
-//  Copyright © 2015年 JPY. All rights reserved.
+//  Copyright © 2015年 ZY. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 @class ZYDateView;
+@class WHBKProvAddress;
+@class WHBKCityAddress;
 
 @protocol ZYDateViewDegate <NSObject>
 
 /** 左按钮被点击 */
 - (void)dateView:(ZYDateView *)dateView LeftClick:(UIButton *)leftBtn;
+
 /** 右按钮被点击 */
-- (void)dateView:(ZYDateView *)dateView rightClick:(UIButton *)righttBtn dateStr:(NSString *)dateStr;
+@optional
+- (void)dateView:(ZYDateView *)dateView rightClick:(UIButton *)rightBtn dateStr:(NSString *)dateStr;
+
+/** 右按钮被点击 */
+- (void)dateView:(ZYDateView *)dateView rightClick:(UIButton *)rightBtn pa:(WHBKProvAddress *)pa ca:(WHBKCityAddress *)ca;
 
 @end
 
@@ -31,13 +38,22 @@
 /** 设置默认年 */
 @property (strong, nonatomic) NSString *defaultYear;
 /** 设置默认月 */
-@property (strong, nonatomic) NSString *defaultmonth;
-
+@property (strong, nonatomic) NSString *defaultMonth;
+/** 设置默认月 */
+@property (strong, nonatomic) NSString *defaultDay;
 
 /** ZYDateView的代理 */
 @property (weak, nonatomic) id<ZYDateViewDegate> dateViewDelegate;
 
-/** 类方法生成年月选择控件 */
-+ (instancetype)dateViewWithYears:(NSArray *)years months:(NSArray *)months;
+/** 类方法生成年月日选择控件 */
++ (instancetype)dateViewWithYears:(NSArray *)years months:(NSArray *)months days:(NSArray *)days;
+/** 类方法生成内容选择控件 */
++ (instancetype)dateViewWithContentArray1:(NSArray *)array1 array2:(NSArray *)array2;
+/** 类方法生成省市选择控件 */
++ (instancetype)dateViewWithPros:(NSArray *)pros cities:(NSArray *)cities;
+/** 弹出选择框 */
+- (void)show;
+/** 移除选择框 */
+- (void)dismis;
 
 @end
