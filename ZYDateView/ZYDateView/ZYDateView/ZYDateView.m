@@ -43,6 +43,8 @@
 @property (strong, nonatomic) WHBKProvAddress *pa;
 /** 选中的市模型 */
 @property (strong, nonatomic) WHBKCityAddress *ca;
+/** 蒙版 */
+@property (nonatomic, strong) UIView *becloudView;
 
 @end
 
@@ -453,13 +455,14 @@
 
 - (void)show
 {
-    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIView *becloudView = [[UIView alloc] init];
     becloudView.frame = window.bounds;
     becloudView.backgroundColor = [UIColor lightGrayColor];
     becloudView.alpha = 0.2;
     UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeMyself)];
     [becloudView addGestureRecognizer:tapGR];
+    self.becloudView = becloudView;
     [window addSubview:becloudView];
     self.frame = CGRectMake(0, window.height - Height, window.width, Height);
     [window addSubview:self];
@@ -467,10 +470,8 @@
 
 - (void)dismis
 {
-    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    for (UIView *view in window.subviews) {
-        [view removeFromSuperview];
-    }
+    [self removeFromSuperview];
+    [self.becloudView removeFromSuperview];
 }
 
 - (void)removeMyself
